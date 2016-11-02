@@ -18,7 +18,7 @@
             		<div class="icon">
               			<i class="fa fa-user" aria-hidden="true"></i>
             		</div>
-            	<a href="#" class="small-box-footer">Ver Lista <i class="fa fa-arrow-circle-right"></i></a>
+            	<a href="{{ URL::to('users') }}" class="small-box-footer">Ver Lista <i class="fa fa-arrow-circle-right"></i></a>
           		</div>
 			</div>
 			<!-- ./col -->

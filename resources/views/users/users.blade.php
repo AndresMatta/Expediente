@@ -1,13 +1,13 @@
 @extends('adminlte::layouts.app')
 
 @section('htmlheader_title')
-	{{ trans('adminlte_lang::message.home') }}
+	Usuarios
 @endsection
 
 
 @section('main-content')
 
-@include('user-list')
+@include('users.users-list')
 
 @endsection
 
