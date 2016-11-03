@@ -44,7 +44,7 @@ class UsuarioController extends Controller
     public function create()
     {
         //
-       return view('usuario.create');
+       return view('users.create-modal');
     }
 
     /**
@@ -61,7 +61,6 @@ class UsuarioController extends Controller
         User::create([
             'username' => $user['username'],
             'name' => $user['name'],
-            'email' => $user['email'],
             'tipo' => $user['tipo'],
             'password' => bcrypt($user['password'])
         ]);
