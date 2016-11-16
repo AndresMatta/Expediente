@@ -33,7 +33,17 @@
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="{{ trans('adminlte_lang::message.email') }}" name="email" value="{{ old('email') }}"/>
+                        <input type="text" class="form-control" placeholder="{{ trans('adminlte_lang::message.email') }}" name="username" value="{{ old('username') }}"/>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <select class="form-control" placeholder="Tipo de usuario" name="tipo" 
+                        value="{{ old('tipo') }}">
+                            <option>Recepcionista</option>
+                            <option>Médico</option>
+                            <option>Administrador</option>
+                            <option>Enfermería</option>
+                        </select>
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">

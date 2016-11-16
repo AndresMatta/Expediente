@@ -1,11 +1,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        @yield('contentheader_title', 'Expediente Eletrónico')
+        Panel de @yield('htmlheader_title', 'Expediente Eletrónico')
         <small>@yield('contentheader_description')</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> {{ trans('adminlte_lang::message.level') }}</a></li>
-        <li class="active">{{ trans('adminlte_lang::message.here') }}</li>
+        <li><a href={{ URL::to('/home') }}><span class="fa fa-home"></span> Página principal</a></li>
+        <li class="active">@yield('htmlheader_title')</li>
     </ol>
 </section>

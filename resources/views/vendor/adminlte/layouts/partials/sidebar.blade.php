@@ -44,8 +44,21 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ URL::to('/users') }}">Usuarios Registrados</a></li>
-                    <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+                    <li><a href="{{ URL::to('/users') }}"><span class="fa fa-circle-o"></span>Usuarios Registrados</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#" style="text-decoration: none">
+                    <i class="fa fa-stethoscope"></i>
+                    <span>Pacientes</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -57,8 +70,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                    <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -70,21 +83,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                    <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                </ul>
-            </li>
-             <li class="treeview">
-                <a href="#" style="text-decoration: none">
-                    <i class="fa fa-user-plus"></i>
-                    <span>Pacientes</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                    <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
                 </ul>
             </li>
         </ul><!-- /.sidebar-menu -->

@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/api/users', function () {
+    return App\User::all();
+});
+
 Route::resource('users', 'UsuarioController');
 
 
