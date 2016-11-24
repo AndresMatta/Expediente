@@ -15,10 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/api/users', function () {
-    return App\User::all();
-});
-
+Route::get('/api/users', 'UsuarioController@getUsers');
+Route::delete('api/users/{id}', 'UsuarioController@destroy');
 Route::resource('users', 'UsuarioController');
 
 

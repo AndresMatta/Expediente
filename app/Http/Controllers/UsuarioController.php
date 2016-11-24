@@ -26,14 +26,42 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+
+    public function getUsers(Request $request)
     {
         //
-       $users = User::all();
-       if($request->ajax()){
-            return response()->json(view('usuario.users',compact('users'))->render());
+        $request = request();
+        // handle sort option
+        if (request()->has('sort')) {
+            list($sortCol, $sortDir) = explode('|', request()->sort);
+            $query = User::orderBy($sortCol, $sortDir);
+        } else {
+            $query = User::orderBy('id', 'asc');
         }
-        return view('users.users',compact('users'));
+        if ($request->exists('filter')) {
+            $query->where(function($q) use($request) {
+                $value = "%{$request->filter}%";
+                $q->where('name', 'like', $value)
+                    ->orWhere('username', 'like', $value)
+                    ->orWhere('tipo', 'like', $value);
+            });
+        }
+        $perPage = request()->has('per_page') ? (int) request()->per_page : null;
+        // The headers 'Access-Control-Allow-Origin' and 'Access-Control-Allow-Methods'
+        // are to allow you to call this from any domain (see CORS for more info).
+        // This is for local testing only. You should not do this in production server,
+        // unless you know what it means.
+        return response()->json(
+                $query->paginate($perPage)
+            );
+        //    ->header('Access-Control-Allow-Origin', '*')
+        //    ->header('Access-Control-Allow-Methods', 'GET');            
+    }
+
+    public function index(Request $request)
+    {
+        //Retorna la vista correspondiente
+        return view('users.users');
     }
 
     /**
@@ -119,11 +147,9 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $user = User::find($id);
-        $user->delete();
-        Session::flash('message', 'Usuario Eliminado Correctamente');
-        return Redirect::to('/usuario');
+        //Eliminar Usuario
+        User::find($id)->delete();
+        return response()->json(['done']);
 }
 
 
