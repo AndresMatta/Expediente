@@ -15,16 +15,6 @@ require('laravel-elixir-vue-2');
 
 elixir(function(mix) {
 
-	Elixir.webpack.mergeConfig({
-        module: {
-            loaders: [{
-                test: /\.jsx?$/, 
-                loader: 'babel',
-                exclude: /node_modules(?!\/(vue-tables-2|vue-pagination-2))\//
-            }]
-        }
-    });
-
     //app.scss includes app css, Boostrap and Ionicons
     mix.webpack('app.js');
 });

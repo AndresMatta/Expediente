@@ -4,29 +4,18 @@
 	Usuarios
 @endsection
 
-@section('htmlheader')
-    @include('adminlte::layouts.partials.htmlheader')
-    {!!Html::style('css/tables/bootstrap.min.css')!!}
-	{!!Html::style('css/tables/sweetalert.min.css')!!}
-	{!!Html::style('css/tables/styles.css')!!}
-@endsection
-
-
 @section('main-content')
 
-@include('users.users-list')
+@include('users.forms.create_modal')
+<users></users>
 
 @endsection
 
 @section('scripts')
 @include('adminlte::layouts.partials.scripts')
-
 {!!Html::script('js/tables/moment-with-locales.min.js')!!}
 {!!Html::script('js/tables/sweetalert.min.js')!!}
-{!!Html::script('js/tables/vue.js')!!}
-{!!Html::script('js/tables/vue-resource.min.js')!!}
-{!!Html::script('js/tables/vue-table.js')!!}
-{!!Html::script('js/tables/users_table.js')!!}
+
 
 @endsection
 
