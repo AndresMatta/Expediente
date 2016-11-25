@@ -4,10 +4,17 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Helper\DataViewer;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use DataViewer;
+
+    public static $columns = [
+        'id', 'name', 'username',
+        'tipo', 'created_at', 'updated_at'
+    ];
 
     /**
      * The attributes that are mass assignable.

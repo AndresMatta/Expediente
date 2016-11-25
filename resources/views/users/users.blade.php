@@ -4,10 +4,15 @@
 	Usuarios
 @endsection
 
+@section('htmlheader')
+    @include('adminlte::layouts.partials.htmlheader')
+    {{Html::style('css/tables.css')}}
+@endsection
+
 @section('main-content')
 
 @include('users.forms.create_modal')
-<users></users>
+<users source="api/users"></users>
 
 @endsection
 

@@ -1,95 +1,178 @@
 <template>
-            <div class="panel panel-default panel-table">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col col-xs-6">
-                    <h3 class="panel-title">Lista de Usuarios Registrados</h3>
-                  </div>
-                  <div class="col col-xs-6 text-right">
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#createModal"><span class="fa fa-plus"> Agregar</span></button>
-                  </div>
-                </div>
-              </div>
-              <div class="panel-body">
-                <table class="table table-striped table-bordered table-list">
-                  <thead>
-                    <tr>
-                        <th class="hidden-xs">ID</th>
-                        <th>Nombre Completo</th>
-                        <th>Nombre de Usuario</th>
-                        <th>Tipo de Usuario</th>
-                        <th>Fecha de Creación</th>
-                        <th>Operaciones</th>
-                    </tr> 
-                  </thead>
-                  <tbody>
-                          <tr v-for="user in list">
-                            <td class="hidden-xs">{{ user.id }}</td>
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.username }}</td>
-                            <td>{{ user.tipo }}</td>
-                            <td>{{ user.created_at }}</td>
-                            <td align="center">
-                              <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
-                              <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
-                            </td>
-                          </tr>
-                        </tbody>
-                </table>
-            
-              </div>
-              <div class="panel-footer">
-                <div class="row">
-                  <div class="col col-xs-4">Page 1 of 5
-                  </div>
-                  <div class="col col-xs-8">
-                    <ul class="pagination hidden-xs pull-right">
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li><a href="#">5</a></li>
-                    </ul>
-                    <ul class="pagination visible-xs pull-right">
-                        <li><a href="#">«</a></li>
-                        <li><a href="#">»</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+  <div class="dv">
+    <div class="dv-header">
+      <div class="dv-header-title">
+        {{title}}
+      </div>
+      <div class="dv-header-columns">
+        <span class="dv-header-pre">Buscar: </span>
+        <select class="dv-header-select" v-model="query.search_column">
+          <option v-for="column in columns" :value="column">{{column}}</option>
+        </select>
+      </div>
+      <div class="dv-header-operators">
+        <select class="dv-header-select" v-model="query.search_operator">
+          <option v-for="(value, key) in operators" :value="key">{{value}}</option>
+        </select>
+      </div>
+      <div class="dv-header-search">
+        <input type="text" class="dv-header-input"
+          placeholder="Search"
+          v-model="query.search_input"
+          @keyup.enter="fetchIndexData()">
+      </div>
+      <div class="dv-header-submit">
+        <button class="dv-header-btn"@click="fetchIndexData()">Filtrar</button>
+      </div>
+    </div>
+    <div class="dv-body">
+      <table class="dv-table">
+        <thead>
+          <tr>
+            <th v-for="column in columns" @click="toggleOrder(column)">
+              <span>{{column}}</span>
+              <span class="dv-table-column" v-if="column === query.column">
+                <span v-if="query.direction === 'desc'">&darr;</span>
+                <span v-else>&uarr;</span>
+              </span>
+            </th>
+            <th>Operaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in model.data">
+            <td v-for="(value, key) in row">{{value}}</td>
+            <td align="center">
+            <button class="btn btn-default" @click.prevent="deleteUsers(row)"><span class="fa fa-pencil"></span></button>
+            <button class="btn btn-default" @click.prevent="deleteUsers(row)"><span class="fa fa-trash"></span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="dv-footer">
+      <div class="dv-footer-item">
+        <span>Mostrando {{model.from}} - {{model.to}} de {{model.total}} registros</span>
+      </div>
+      <div class="dv-footer-item">
+        <div class="dv-footer-sub">
+          <span>Registros por página</span>
+          <input type="text" v-model="query.per_page"
+            class="dv-footer-input"
+            @keyup.enter="fetchIndexData()">
+        </div>
+        <div class="dv-footer-sub">
+          <button class="dv-footer-btn" @click="prev()">&laquo;</button>
+          <input type="text" v-model="query.page"
+            class="dv-footer-input"
+            @keyup.enter="fetchIndexData()">
+          <button class="dv-footer-btn" @click="next()">&raquo;</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+    import Vue from 'vue';
+    import axios from 'axios';
+
     export default {
 
-        data: function(){
+        props: [ 'source', 'tittle' ],
+
+        data(){
 
             return {
-                list: ['']
+                model: {},
+                columns: {},
+                query: {
+                  page: 1,
+                  column: 'id',
+                  direction: 'desc',
+                  per_page: 10,
+                  search_column: 'id',
+                  search_operator: 'equal',
+                  search_input: ''
+                },
+                operators: {
+                  equal: '=',
+                  not_equal: '<>',
+                  less_than: '<',
+                  greater_than: '>',
+                  less_than_or_equal_to: '<=',
+                  greater_than_or_equal_to: '>=',
+                  in: 'IN',
+                  like: 'LIKE'
+                }
             };
 
         },
 
         created: function(){
 
-            this.fetchUsers();
+            this.fetchIndexData();
 
         },
 
         methods: {
+
+        deleteUser(row){
+            this.$http.delete(`http://localhost:8000/api/users/${row.id}`).then((response) => {
+                  console.log(respose)
+           });
+        },
+
+        next(){
+
+          if (this.model.next_page_url) {
+            this.query.page++
+            this.fetchIndexData()
+          }
+
+        },
+
+        prev(){
+          
+          if (this.model.prev_page_url) {
+            this.query.page--
+            this.fetchIndexData()
+          }
+
+        },
+
+        toggleOrder(column) {
+        if(column === this.query.column) {
+          // only change direction
+          if(this.query.direction === 'desc') {
+            this.query.direction = 'asc'
+          } else {
+            this.query.direction = 'desc'
+          }
+        } else {
+          this.query.column = column
+          this.query.direction = 'asc'
+        }
+        this.fetchIndexData()
+      },
+
         deleteUser: function(user){
             var index = this.list.indexOf(user);
             this.list.splice(index, 1);
         },
-        fetchUsers: function(){
-            this.$http.get('/api/users').then((response) => {
-            this.list = response.data;
-         });
 
-        } 
-    }  
+        fetchIndexData() {
+        var vm = this
+        axios.get(`${this.source}?column=${this.query.column}&direction=${this.query.direction}&page=${this.query.page}&per_page=${this.query.per_page}&search_column=${this.query.search_column}&search_operator=${this.query.search_operator}&search_input=${this.query.search_input}`)
+          .then(function(response) {
+            Vue.set(vm.$data, 'model', response.data.model)
+            Vue.set(vm.$data, 'columns', response.data.columns)
+          })
+          .catch(function(response) {
+            console.log(response)
+          })
+      }
+    } 
 
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\User;
+use App\Helper\DataViewer;
 
 class UsuarioController extends Controller
 {
@@ -30,8 +31,14 @@ class UsuarioController extends Controller
     public function getUsers()
     {
         //
-        $users = User::all();
-        return response()->json($users);         
+        $model = User::SearchPaginateAndOrder();
+        $columns = User::$columns;
+
+        return response()
+            ->json([
+                'model'=> $model,
+                'columns'=>$columns
+                ]);       
     }
 
     public function index(Request $request)

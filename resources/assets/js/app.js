@@ -17,5 +17,13 @@ Vue.component('example', require('./components/Example.vue'));
 Vue.component('users', require('./components/Users.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+
+     http: {
+        headers: {
+            // You could also store your token in a global object, 
+            // and reference it here. APP.token
+            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+        }
+    }
 });
