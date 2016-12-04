@@ -70,8 +70,10 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+
+                    <li><a href="{{ URL::to('/recepcion') }}"><span class="fa fa-circle-o"></span>Iniciar Consulta</a></li>
+
+                    <li><a href="{{ URL::to('/consultas') }}"><span class="fa fa-circle-o"></span>Consultas Pendientes</a></li>
                 </ul>
             </li>
             <li class="treeview">

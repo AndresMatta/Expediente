@@ -7,11 +7,11 @@
 @endsection
 
 @section('content')
-<body class="hold-transition login-page">
+<body class="login-page">
     <div id="app">
         <div class="login-box">
-            <div class="login-logo">
-                <b>Log</b> in
+            <div class="login-logo animated lightSpeedIn">
+                <b>Iniciar</b> Sesión
             </div><!-- /.login-logo -->
 
         @if (count($errors) > 0)
@@ -25,8 +25,8 @@
             </div>
         @endif
 
-        <div class="login-box-body">
-        <p class="login-box-msg"> <b>{{ trans('adminlte_lang::message.siginsession') }} </b></p>
+        <div class="login-box-body animated flipInY">
+        <p class="login-box-msg"> <b>Ingresar al Sistema </b></p>
         <form action="{{ url('/login') }}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="input-group">
@@ -43,7 +43,7 @@
             </div><br>
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="checkbox icheck">
+                    <div class="checkbox icheck animated fadeIn">
                         <label>
                             <input type="checkbox" name="remember"> {{ trans('adminlte_lang::message.remember') }}
                         </label>
@@ -54,9 +54,6 @@
                 </div><!-- /.col -->
             </div>
         </form>
-
-        <a href="{{ url('/password/reset') }}">{{ trans('adminlte_lang::message.forgotpassword') }}</a><br>
-        <a href="{{ url('/register') }}" class="text-center">{{ trans('adminlte_lang::message.registermember') }}</a>
 
     </div><!-- /.login-box-body -->
 

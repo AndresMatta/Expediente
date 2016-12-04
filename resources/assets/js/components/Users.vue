@@ -1,8 +1,11 @@
 <template>
-  <div class="dv">
+
+  <div class="dv animated fadeIn">
     <div class="dv-header">
       <div class="dv-header-title">
-        {{title}}
+        <button class="dv-header-btn" data-toggle="modal" data-target="#createModal">
+        <span class="fa fa-user-plus"></span>
+        </button>
       </div>
       <div class="dv-header-columns">
         <span class="dv-header-pre">Buscar: </span>
@@ -17,12 +20,12 @@
       </div>
       <div class="dv-header-search">
         <input type="text" class="dv-header-input"
-          placeholder="Search"
+          placeholder="Buscar"
           v-model="query.search_input"
           @keyup.enter="fetchIndexData()">
       </div>
       <div class="dv-header-submit">
-        <button class="dv-header-btn"@click="fetchIndexData()">Filtrar</button>
+        <button class="dv-header-btn"@click="fetchIndexData()"><span class="fa fa-search"></span></button>
       </div>
     </div>
     <div class="dv-body">
@@ -43,8 +46,8 @@
           <tr v-for="row in model.data">
             <td v-for="(value, key) in row">{{value}}</td>
             <td align="center">
-            <button class="btn btn-default" @click.prevent="deleteUsers(row)"><span class="fa fa-pencil"></span></button>
-            <button class="btn btn-default" @click.prevent="deleteUsers(row)"><span class="fa fa-trash"></span></button>
+            <button class="btn btn-default" @click="edit()"><span class="fa fa-pencil"></span></button>
+            <button class="btn btn-default" @click="destroy(row)"><span class="fa fa-trash"></span></button>
             </td>
           </tr>
         </tbody>
@@ -117,10 +120,84 @@
 
         methods: {
 
-        deleteUser(row){
-            this.$http.delete(`http://localhost:8000/api/users/${row.id}`).then((response) => {
-                  console.log(respose)
-           });
+        add(){
+
+            var vm = this
+
+            axios.post('/api/users', {
+                firstName: 'Fred',
+                lastName: 'Flintstone'
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        edit(){
+
+        swal('Any fool can use a computer');
+        toastr.info('Are you the 6 fingered man?')
+            
+        },
+
+        destroy(row){
+
+        var vm = this
+
+        swal({
+          title: '¿Estás seguro?',
+          text: "¡"+ row.name +" será elimiado de forma permanente del sistema!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '¡Sí, quiero eliminarlo!',
+          cancelButtonText: 'No, cancel!',
+          confirmButtonClass: 'btn btn-success',
+          cancelButtonClass: 'btn btn-danger',
+          animation: false,
+          customClass: 'animated tada',
+          showLoaderOnConfirm: true,
+          buttonsStyling: true,
+          preConfirm: function () {
+            return new Promise(function (resolve, reject) {
+
+                axios.delete(`api/users/${row.id}`)
+                .then(function(response) {
+                    console.log(response)
+                    resolve()
+                    vm.fetchIndexData()
+                    })    
+                .catch(function(response) {
+                    console.log(response)
+                    reject('Error al ejecutar la operacion.')
+                    })                
+            })
+        },
+        allowOutsideClick: false
+        }).then(function () {
+
+          swal(
+           '¡Eliminado!',
+            row.name +' ha sido borrado del sistema.',
+            'success'
+            )
+
+        }, function (dismiss) {
+          // dismiss can be 'cancel', 'overlay',
+          // 'close', and 'timer'
+          if (dismiss === 'cancel') {
+            swal(
+              'Cancelado',
+              row.name + ' está a salvo :)',
+              'error'
+            )
+          }
+        })
+
         },
 
         next(){
@@ -156,10 +233,6 @@
         this.fetchIndexData()
       },
 
-        deleteUser: function(user){
-            var index = this.list.indexOf(user);
-            this.list.splice(index, 1);
-        },
 
         fetchIndexData() {
         var vm = this

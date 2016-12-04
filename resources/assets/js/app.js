@@ -14,16 +14,14 @@ require('./bootstrap');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+//Componentes de Usuarios
 Vue.component('users', require('./components/Users.vue'));
+Vue.component('users-create', require('./components/UsersCreate.vue'));
+//Componentes de Consulta
+Vue.component('my-recepcion', require('./components/ConsultaRecepcion.vue'));
+Vue.component('my-pendientes', require('./components/ConsultaPendientes.vue'));
+Vue.component('my-atencion', require('./components/ConsultaAtencion.vue'));
 
 const app = new Vue({
     el: '#app',
-
-     http: {
-        headers: {
-            // You could also store your token in a global object, 
-            // and reference it here. APP.token
-            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-        }
-    }
 });

@@ -14,6 +14,7 @@ require('bootstrap-sass');
 
 require('admin-lte');
 window.toastr = require('toastr');
+window.swal = require('sweetalert2');
 require('icheck');
 
 /**
@@ -36,6 +37,8 @@ Vue.http.interceptors.push((request, next) => {
 
     next();
 });
+
+// alertas 
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

@@ -16,5 +16,6 @@ require('laravel-elixir-vue-2');
 elixir(function(mix) {
 
     //app.scss includes app css, Boostrap and Ionicons
+    //mix.sass('tables.scss');
     mix.webpack('app.js');
 });

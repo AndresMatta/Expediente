@@ -3,24 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Requests\UserCreateRequest;
-use App\User;
-use App\Helper\DataViewer;
+use App\Consulta;
+use App\Paciente;
 
-class UsuarioController extends Controller
+class ConsultaController extends Controller
 {
-    //
 
-	/**
-     * Create a new controller instance.
+    /**
+     * Display a listing of the resource.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function __construct()
+    public function recepcion()
     {
-        $this->middleware('auth');
+        return view('consultas.consulta_recep');
+
     }
 
     /**
@@ -28,24 +26,43 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function getUsers()
+    public function atencion($id)
     {
-        //
-        $model = User::SearchPaginateAndOrder();
-        $columns = User::$columns;
+        return view('consultas.consulta_atencion',compact('id'));
+
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('consultas.consulta_pendientes');
+
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getConsultasEnEspera($espera)
+    {
+        $consultas = Consulta::where('estado', $espera)->get();
+        foreach ($consultas as $consulta) {
+
+         $paciente = $consulta->paciente;
+         $consulta->push($paciente);
+
+        }
 
         return response()
             ->json([
-                'model'=> $model,
-                'columns'=>$columns
-                ]);       
-    }
-
-    public function index(Request $request)
-    {
-        //Retorna la vista correspondiente
-        return view('users.users');
+                'consultas'=> $consultas,
+                //'pacientes'=> $pacientes
+                ]);
     }
 
     /**
@@ -56,7 +73,6 @@ class UsuarioController extends Controller
     public function create()
     {
         //
-       return view('users.create-modal');
     }
 
     /**
@@ -65,22 +81,9 @@ class UsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserCreateRequest $request)
+    public function store(Request $request)
     {
         //
-        $user = $request->all();
-
-        User::create([
-            'username' => $user['username'],
-            'name' => $user['name'],
-            'tipo' => $user['tipo'],
-            'password' => bcrypt($user['password'])
-        ]);
-
-        return response()->json($user, 201);
-
-    
-        
     }
 
     /**
@@ -103,9 +106,6 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         //
-        $user = User::find($id);
-
-        return response()->json($user);
     }
 
     /**
@@ -118,11 +118,6 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $user = User::find($id);
-        $user = fill($request->all());
-        $user->save();
-
-        return response()->json([ "mensaje"=> "listo"]);
     }
 
     /**
@@ -133,10 +128,6 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //Eliminar Usuario
-        User::find($id)->delete();
-        return response()->json(['done']);
-}
-
-
+        //
+    }
 }

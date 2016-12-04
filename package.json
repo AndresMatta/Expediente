@@ -24,6 +24,7 @@
     "toastr": "^2.1.2"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "axios": "^0.15.2"
   }
 }
