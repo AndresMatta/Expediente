@@ -6,7 +6,7 @@
                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
               </div><!-- /.box-tools -->
               <hr>
-              <a class="btn btn-app">
+              <a class="btn btn-app " v-bind:class="isActive">
                 <i class="fa fa-address-book-o"></i>Datos
               </a>
               <a class="btn btn-app">
@@ -33,7 +33,7 @@
     <form class="form-horizontal" method="post">
       <div class="box-body">
       <pre>Datos Personales</pre>
-        <div class="row" style="padding:2em;" v-if="personales">
+        <div class="row" style="padding:2em;">
           <div class="col-sm-3">
             <div class="form-group">
               <label>Cédula</label>
@@ -233,6 +233,10 @@
 		data() {
             return {
 
+              isActive : {
+                active: false,
+                'btn-success': false
+              },
               consulta: {
 
               	signos: {
@@ -265,6 +269,10 @@
               }
             };
         },
+
+        methods: {
+          showSection
+        }
 
 	}
 

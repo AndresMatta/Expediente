@@ -120,22 +120,6 @@
 
         methods: {
 
-        add(){
-
-            var vm = this
-
-            axios.post('/api/users', {
-                firstName: 'Fred',
-                lastName: 'Flintstone'
-            })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
-
         edit(){
 
         swal('Any fool can use a computer');
@@ -155,7 +139,7 @@
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: '¡Sí, quiero eliminarlo!',
-          cancelButtonText: 'No, cancel!',
+          cancelButtonText: '¡No, cancelar!',
           confirmButtonClass: 'btn btn-success',
           cancelButtonClass: 'btn btn-danger',
           animation: false,
