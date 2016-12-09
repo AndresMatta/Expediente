@@ -21,16 +21,18 @@ Route::post('/api/users', 'UsuarioController@store');
 Route::resource('users', 'UsuarioController');
 Route::delete('api/users/{id}', 'UsuarioController@destroy');
 
-
+//Paciente
 Route::get('api/paciente/{cedula}', 'PacienteController@getPaciente');
 Route::resource('pacientes', 'PacienteController');
 Route::post('api/consulta/{cedula}', 'PacienteController@IniciarConsulta');
 
-//Rutas para controladores resources
+//Consultas
 Route::resource('consultas', 'ConsultaController');
 Route::get('recepcion', 'ConsultaController@recepcion');
-Route::get('consultas/pendientes/{estado}', 'ConsultaController@getConsultasEnEspera');
 Route::get('consultas/atencion/{id}' , 'ConsultaController@atencion');
+Route::get('consultas/pendientes/{estado}', 'ConsultaController@getConsultasEnEspera');
+Route::get('api/actual/{id}' , 'ConsultaController@getConsulta');
+
 
 
 

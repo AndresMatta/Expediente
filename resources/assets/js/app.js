@@ -22,6 +22,7 @@ Vue.component('my-recepcion', require('./components/ConsultaRecepcion.vue'));
 Vue.component('my-pendientes', require('./components/ConsultaPendientes.vue'));
 Vue.component('my-atencion', require('./components/ConsultaAtencion.vue'));
 
+
 const app = new Vue({
     el: '#app',
 });

@@ -1,64 +1,80 @@
 <template>
-	<div class="box box-success">
+	<div class="box box-success animated fadeIn">
     <div class="box-header with-border">
-              <h3 class="box-title">Iniciar una nueva consulta</h3>
+              <h3 class="box-title">Consulta de Medicina General</h3>
               <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
               </div><!-- /.box-tools -->
               <hr>
-              <a class="btn btn-app " v-bind:class="isActive">
+              <a class="btn btn-app " :class="classDatos" @click="showDatos()">
                 <i class="fa fa-address-book-o"></i>Datos
               </a>
-              <a class="btn btn-app">
+              <a class="btn btn-app" :class="classSignos" @click="showSignos()">
                 <i class="fa fa-heartbeat"></i>Signos
               </a>
-              <a class="btn btn-app">
+              <a class="btn btn-app" :class="classInicial" @click="showInicial()">
                 <i class="fa fa-user-md"></i>Inicial
               </a>
-              <a class="btn btn-app">
+              <a class="btn btn-app" :class="classPlan" @click="showPlan()">
                 <i class="fa fa-medkit"></i>Plan
               </a>
-              <a class="btn btn-app">
+              <a class="btn btn-app" :class="classPruebas" @click="showPruebas()">
                 <i class="fa fa-file-archive-o"></i>Pruebas
               </a>
-              <a class="btn btn-app">
+              <a class="btn btn-app" :class="classDx" @click="showDx()">
                 <i class="fa fa-bed"></i>Diagnóstico
               </a>
-              <a class="btn btn-app">
+              <a class="btn btn-app" :class="classRef" @click="showRef()">
                 <i class="fa fa-ambulance"></i>Referencias
               </a>
             </div><!-- /.box-header -->
     <!-- /.box-header -->
     <!-- form start -->
-    <form class="form-horizontal" method="post">
+    <form class="form-horizontal" v-on:submit.prevent="submit()" method="post">
       <div class="box-body">
       <pre>Datos Personales</pre>
-        <div class="row" style="padding:2em;">
+
+      <transition
+      name="custom-classes-transition"
+      enter-active-class="animated fadeInUp"
+      leave-active-class="animated fadeOut"
+      >
+        <div class="row" style="padding:2em;" v-if="datosSection">
           <div class="col-sm-3">
             <div class="form-group">
-              <label>Cédula</label>
-                  <input type="text" name="cedula" class="form-control" id="cedula" placeholder="Introduzca la cédula" required>    
+              <label>Cédula:</label>
+                  <input type="text" name="cedula" class="form-control" id="cedula" placeholder="Introduzca la cédula" v-model="paciente.cedula" disabled="disabled">    
               </div>
           </div>  
               <div class="col-sm-5 col-md-offset-1">
                 <div class="form-group">
-                <label>Nombre Completo</label>
-                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Introduzca aquí el nombre del paciente">  
+                <label>Nombre Completo: </label>
+                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Introduzca aquí el nombre del paciente" v-model="paciente.nombre" 
+                    disabled="disabled">  
                 </div>  
               </div>
             
               <div class="col-sm-2 col-md-offset-1">
                 <div class="form-group">
-                <label>Fecha de Nacimiento</label>
-                    <input type="date" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el número de cédula">  
+                <label>Fecha de Nacimiento: </label>
+                    <input type="date" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el número de cédula" 
+                    v-model="paciente.nacimiento" disabled="disabled">  
                 </div>  
               </div> 
 
             </div>
-            <hr>
-            <pre>Signos Vitales</pre>
+      </transition>
+        
 
-            <div class="row" style="padding: 2em;">
+
+      <hr>
+      <pre>Signos Vitales</pre>
+      <transition
+      name="custom-classes-transition"
+      enter-active-class="animated fadeInUp"
+      leave-active-class="animated fadeOut"
+      >
+        <div class="row" style="padding: 2em;" v-if="signosSection">
               
               <div class="col-sm-2">
                 <div class="form-group">
@@ -117,100 +133,130 @@
               </div>
 
             </div>
-            <hr>
-            <pre>Diagnóstico Inicial</pre>
-	        <div class="row" style="padding:2em;">
-	          <div class="col-sm-5">
-	            <div class="form-group">
-	              <label>Síntomas: </label>
-	                  <textarea class="form-control" rows="3"></textarea>    
-	              </div>
-	          </div>  
-	              <div class="col-sm-5 col-sm-offset-1">
-	            <div class="form-group">
-	              <label>Observaciones: </label>
-	                  <textarea class="form-control" rows="3"></textarea>    
-	              </div>
-	          </div> 
-	            
-	              <div class="col-sm-4">
-	                <div class="form-group">
-	                <label>Diagnóstico Inicial: </label>
-	                    <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial">  
-	                </div>  
-	              </div> 
+      </transition>
+            
+      <hr>
+      <pre>Diagnóstico Inicial</pre>
+      <transition
+      name="custom-classes-transition"
+      enter-active-class="animated fadeInUp"
+      leave-active-class="animated fadeOut"
+      >
+          <div class="row" style="padding:2em;" v-if="inicialSection">
+            <div class="col-sm-5">
+              <div class="form-group">
+                <label>Síntomas: </label>
+                    <textarea class="form-control" rows="3"></textarea>    
+                </div>
+            </div>  
+                <div class="col-sm-5 col-sm-offset-1">
+              <div class="form-group">
+                <label>Observaciones: </label>
+                    <textarea class="form-control" rows="3"></textarea>    
+                </div>
+            </div> 
+              
+                <div class="col-sm-4">
+                  <div class="form-group">
+                  <label>Diagnóstico Inicial: </label>
+                      <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial">  
+                  </div>  
+                </div> 
 
-	            </div>
+              </div>
+      </transition>
+	        
+		  <hr>
+		  <pre>Plan</pre>
+      <transition
+      name="custom-classes-transition"
+      enter-active-class="animated fadeInUp"
+      leave-active-class="animated fadeOut"
+      >
+        <div class="row" style="padding:2em;" v-if="planSection">
+             <div class="col-sm-5">
+                <div class="form-group">
+                   <label>Tratamientos: </label>
+                     <textarea class="form-control" rows="3"></textarea>    
+                 </div>
+              </div>   
+                 
+          </div>
+      </transition>
 
-		        <hr>
-		        <pre>Plan</pre>
-			    <div class="row" style="padding:2em;">
-			       <div class="col-sm-5">
-			          <div class="form-group">
-			             <label>Tratamientos: </label>
-			               <textarea class="form-control" rows="3"></textarea>    
-			           </div>
-			        </div>   
-			           
-			   	</div>
+      <hr>
+      <pre>Pruebas diagnósticas</pre>
+      <transition
+      name="custom-classes-transition"
+      enter-active-class="animated fadeInUp"
+      leave-active-class="animated fadeOut"
+      >
+          <div class="row" style="padding:2em;" v-if="pruebasSection">
+             <div class="col-sm-5">
+                <div class="form-group">
+                   <label>Laboratorio: </label>
+                     <textarea class="form-control" rows="3"></textarea>    
+                 </div>
+              </div>   
+              
+              <div class="col-sm-5 col-md-offset-1">
+                <div class="form-group">
+                   <label>Rayos X: </label>
+                     <textarea class="form-control" rows="3"></textarea>    
+                 </div>
+              </div>
 
-			   	<hr>
-		        <pre>Pruebas diagnósticas</pre>
-			    <div class="row" style="padding:2em;">
-			       <div class="col-sm-5">
-			          <div class="form-group">
-			             <label>Laboratorio: </label>
-			               <textarea class="form-control" rows="3"></textarea>    
-			           </div>
-			        </div>   
-			        
-			        <div class="col-sm-5 col-md-offset-1">
-			          <div class="form-group">
-			             <label>Rayos X: </label>
-			               <textarea class="form-control" rows="3"></textarea>    
-			           </div>
-			        </div>
+          </div>
+      </transition>
+			    
+			<hr>
+		  <pre>Diagnóstico Final</pre>
+      <transition
+      name="custom-classes-transition"
+      enter-active-class="animated fadeInUp"
+      leave-active-class="animated fadeOut"
+      >
+        <div class="row" style="padding:2em;" v-if="dxSection">
+           <div class="col-sm-5">
+              <div class="form-group">
+                <label>Resultados: </label>
+                    <textarea class="form-control" rows="3"></textarea>    
+                </div>
+            </div>  
+                <div class="col-sm-5 col-sm-offset-1">
+              <div class="form-group">
+                <label>Indicaciones: </label>
+                    <textarea class="form-control" rows="3"></textarea>    
+                </div>
+            </div> 
+              
+                <div class="col-sm-4">
+                  <div class="form-group">
+                  <label>Diagnóstico Final: </label>
+                      <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial">  
+                  </div>  
+                </div> 
 
-			   	</div>
-
-			   	<hr>
-		        <pre>Diagnóstico Final</pre>
-			    <div class="row" style="padding:2em;">
-			       <div class="col-sm-5">
-			          <div class="form-group">
-			             <label>Resultados: </label>
-			               <textarea class="form-control" rows="3"></textarea>    
-			           </div>
-			        </div>   
-			        
-			        <div class="col-sm-5 col-md-offset-1">
-			          <div class="form-group">
-			             <label>Diagnóstico: </label>
-			               <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial">    
-			           </div>
-			        </div>
-
-			   	</div>
-
-			   	<hr>
-		        <pre>Indicaciones y referencias</pre>
-			    <div class="row" style="padding:2em;">
-			       <div class="col-sm-5">
-			          <div class="form-group">
-			             <label>Indicaciones: </label>
-			               <textarea class="form-control" rows="3"></textarea>    
-			           </div>
-			        </div>   
-			        
-			        <div class="col-sm-5 col-md-offset-1">
-			          <div class="form-group">
-			             <label>Referencias: </label>
-			               <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial">    
-			           </div>
-			        </div>
-
-			   	</div>
-
+          </div>
+      </transition>
+			    
+			<hr>
+		  <pre>Referencias</pre>
+      <transition
+      name="custom-classes-transition"
+      enter-active-class="animated fadeInUp"
+      leave-active-class="animated fadeOut"
+      >
+          <div class="row" style="padding:2em;" v-if="refSection">
+               
+              <div class="col-sm-5">
+                <div class="form-group">
+                   <label>Referencias: </label>
+                     <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial">    
+                 </div>
+              </div>
+          </div>
+      </transition>
 
       </div>
       <!-- /.box-body -->
@@ -230,13 +276,37 @@
 	import axios from 'axios';
 
 	export default{
+    props: ['id'],
 		data() {
             return {
 
-              isActive : {
-                active: false,
-                'btn-success': false
+              datosIsActive : true,
+              datosSection: true,
+
+              signosIsActive : false,
+              signosSection: false,
+
+              inicialIsActive : false,
+              inicialSection: false,
+
+              planIsActive : false,
+              planSection: false,
+
+              pruebasIsActive : false,
+              pruebasSection: false,
+
+              dxIsActive : false,
+              dxSection: false,
+
+              refIsActive : false,
+              refSection: false,
+
+              paciente: {
+                nombre: '',
+                cedula: '',
+                nacimiento: ''
               },
+
               consulta: {
 
               	signos: {
@@ -270,8 +340,117 @@
             };
         },
 
+        computed: {
+
+          classDatos: function () {
+            return {
+              active: this.datosIsActive,
+              'btn-success': this.datosIsActive,
+            }
+          },
+
+          classSignos: function () {
+            return {
+              active: this.signosIsActive,
+              'btn-success': this.signosIsActive,
+            }
+          },
+
+          classInicial: function () {
+            return {
+              active: this.inicialIsActive,
+              'btn-success': this.inicialIsActive,
+            }
+          },
+
+          classPlan: function () {
+            return {
+              active: this.planIsActive,
+              'btn-success': this.planIsActive,
+            }
+          },
+
+          classPruebas: function () {
+            return {
+              active: this.pruebasIsActive,
+              'btn-success': this.pruebasIsActive,
+            }
+          },
+
+          classDx: function () {
+            return {
+              active: this.dxIsActive,
+              'btn-success': this.dxIsActive,
+            }
+          },
+
+          classRef: function () {
+            return {
+              active: this.refIsActive,
+              'btn-success': this.refIsActive,
+            }
+          }
+        },
+
+        created: function(){
+
+            this.fetchConsulta();
+
+        },
+
         methods: {
-          showSection
+
+          fetchConsulta(){
+
+                var vm = this
+
+                axios.get('/api/actual/' + this.id).then(function (response) {
+                  console.log(response);
+                  vm.paciente.cedula = response.data.paciente.cedula;
+                  vm.paciente.nombre = response.data.paciente.nombre;
+                  vm.paciente.nacimiento = response.data.paciente.nacimiento;
+                  
+                }).catch(function (error) {
+                  console.log('Se ha encontrado un error: ' + error);
+                });
+
+          },
+          
+          showDatos() {
+            this.datosIsActive =! this.datosIsActive;
+            this.datosSection =! this.datosSection;
+          },
+
+          showSignos() {
+            this.signosIsActive =! this.signosIsActive;
+            this.signosSection =! this.signosSection;
+          },
+
+          showInicial() {
+            this.inicialIsActive =! this.inicialIsActive;
+            this.inicialSection =! this.inicialSection;
+          },
+
+          showPlan() {
+            this.planIsActive =! this.planIsActive;
+            this.planSection =! this.planSection;
+          },
+
+          showPruebas() {
+            this.pruebasIsActive =! this.pruebasIsActive;
+            this.pruebasSection =! this.pruebasSection;
+          },
+
+          showDx() {
+            this.dxIsActive =! this.dxIsActive;
+            this.dxSection =! this.dxSection;
+          },
+
+          showRef() {
+            this.refIsActive =! this.refIsActive;
+            this.refSection =! this.refSection;
+          },
+
         }
 
 	}

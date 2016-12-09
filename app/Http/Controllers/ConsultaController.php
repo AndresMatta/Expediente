@@ -66,6 +66,19 @@ class ConsultaController extends Controller
     }
 
     /**
+     * Obtiene la consulta que se está atendiendo
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getConsulta($id)
+    {
+        $consulta = Consulta::find($id);
+        $paciente = $consulta->paciente;
+        $consulta->push($paciente);
+        return response()->json($consulta);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

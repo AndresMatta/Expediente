@@ -6,8 +6,8 @@
 
 @section('main-content')
 
-<p>{{ $id }}</p>
-<my-atencion></my-atencion>
+
+<my-atencion id="{{ $id }}"></my-atencion>
 
 @endsection
 

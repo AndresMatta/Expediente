@@ -1,5 +1,5 @@
 <template>  
-  <div class="box box-success">
+  <div class="box box-success animated fadeIn">
     <div class="box-header with-border">
               <h3 class="box-title">Iniciar una nueva consulta</h3>
               <div class="box-tools pull-right">
@@ -25,8 +25,12 @@
         </div>
 
         <hr>
-
-        <div class="datos" v-if="datos">
+        <transition
+        name="custom-classes-transition"
+        enter-active-class="animated fadeInUp"
+        leave-active-class="animated fadeOutRight"
+        >
+            <div class="datos" v-if="datos">
 
             <div class="row" style="padding-left:2em;">
               <div class="col-sm-5">
@@ -110,7 +114,9 @@
               </div>  
         </div>
 
-        </div>  
+        </div>
+        </transition>
+          
 
       </div>
       <!-- /.box-body -->

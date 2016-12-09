@@ -1,16 +1,16 @@
 <template>
-	<div class="box box-success">
+	<div class="box box-success animated fadeIn">
 		<div class="box-header with-border">
 			<h4>Consultas Pedientes</h4>
 		</div>
 		<div class="box-body">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th><span class="fa fa-id-card-o"></span> Numero de Cédula</th>
-					<th><span class="fa fa-user"></span> Nombre Completo</th>
-					<th><span class="fa fa-mars"></span> Sexo</th>
-					<th><span class="fa fa-birthday-cake"></span> Fecha de Nacimiento</th>
-					<th><span class="fa fa-cogs"></span> Operaciones</th>
+					<th style="padding:1em;"><span class="fa fa-id-card-o"></span> Numero de Cédula</th>
+					<th style="padding:1em;"><span class="fa fa-user"></span> Nombre Completo</th>
+					<th style="padding:1em;"><span class="fa fa-mars"></span> Sexo</th>
+					<th style="padding:1em;"><span class="fa fa-birthday-cake"></span> Fecha de Nacimiento</th>
+					<th style="padding:1em;"><span class="fa fa-cogs"></span> Operaciones</th>
 				</thead>
 				<tbody>
 					<tr v-for="consulta in activas">
