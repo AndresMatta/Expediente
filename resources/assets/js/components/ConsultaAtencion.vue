@@ -30,7 +30,7 @@
             </div><!-- /.box-header -->
     <!-- /.box-header -->
     <!-- form start -->
-    <form class="form-horizontal" v-on:submit.prevent="submit()" method="post">
+    <form class="form-horizontal" v-on:submit.prevent="addConsulta()" method="post">
       <div class="box-body">
       <pre>Datos Personales</pre>
 
@@ -84,7 +84,7 @@
                       <div class="input-group-addon">
                         <i class="fa fa-heart"></i>
                       </div>
-                      <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;9999-9999&quot;" data-mask="">
+                      <input type="text" class="form-control" maxlength="3" v-model="actual.signos.presion_arterial">
                     </div>
                     <!-- /.input group -->
                   </div> 
@@ -98,7 +98,7 @@
                       <div class="input-group-addon">
                         <i class="fa fa-heartbeat"></i>
                       </div>
-                      <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;9999-9999&quot;" data-mask="">
+                      <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;9999-9999&quot;" data-mask="" v-model="actual.signos.frecuencia_cardiaca">
                     </div>
                     <!-- /.input group -->
                   </div> 
@@ -112,7 +112,7 @@
                       <div class="input-group-addon">
                         <i class="fa fa-thermometer-half"></i>
                       </div>
-                      <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;9999-9999&quot;" data-mask="">
+                      <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;9999-9999&quot;" data-mask="" v-model="actual.signos.temperatura">
                     </div>
                     <!-- /.input group -->
                   </div> 
@@ -126,7 +126,7 @@
                       <div class="input-group-addon">
                         <i class="fa fa-balance-scale"></i>
                       </div>
-                      <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;9999-9999&quot;" data-mask="">
+                      <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;9999-9999&quot;" data-mask="" v-model="actual.signos.peso">
                     </div>
                     <!-- /.input group -->
                   </div> 
@@ -146,20 +146,22 @@
             <div class="col-sm-5">
               <div class="form-group">
                 <label>Síntomas: </label>
-                    <textarea class="form-control" rows="3"></textarea>    
+                    <textarea class="form-control" rows="3" v-model="actual.inicial.sintomas"></textarea>    
                 </div>
             </div>  
                 <div class="col-sm-5 col-sm-offset-1">
               <div class="form-group">
                 <label>Observaciones: </label>
-                    <textarea class="form-control" rows="3"></textarea>    
+                    <textarea class="form-control" rows="3" 
+                    v-model="actual.inicial.observaciones"></textarea>    
                 </div>
             </div> 
               
                 <div class="col-sm-4">
                   <div class="form-group">
                   <label>Diagnóstico Inicial: </label>
-                      <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial">  
+                      <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial" 
+                      v-model="actual.inicial.dx_inicial">  
                   </div>  
                 </div> 
 
@@ -177,7 +179,8 @@
              <div class="col-sm-5">
                 <div class="form-group">
                    <label>Tratamientos: </label>
-                     <textarea class="form-control" rows="3"></textarea>    
+                     <textarea class="form-control" rows="3" 
+                     v-model="actual.plan.tratamiento"></textarea>    
                  </div>
               </div>   
                  
@@ -195,14 +198,15 @@
              <div class="col-sm-5">
                 <div class="form-group">
                    <label>Laboratorio: </label>
-                     <textarea class="form-control" rows="3"></textarea>    
+                     <textarea class="form-control" rows="3" v-model="actual.pruebas.laboratorio"></textarea>    
                  </div>
               </div>   
               
               <div class="col-sm-5 col-md-offset-1">
                 <div class="form-group">
                    <label>Rayos X: </label>
-                     <textarea class="form-control" rows="3"></textarea>    
+                     <textarea class="form-control" rows="3" v-model="actual.pruebas.rayos">
+                     </textarea>    
                  </div>
               </div>
 
@@ -220,20 +224,23 @@
            <div class="col-sm-5">
               <div class="form-group">
                 <label>Resultados: </label>
-                    <textarea class="form-control" rows="3"></textarea>    
+                    <textarea class="form-control" rows="3" 
+                    v-model="actual.final.resultados"></textarea>    
                 </div>
             </div>  
                 <div class="col-sm-5 col-sm-offset-1">
               <div class="form-group">
                 <label>Indicaciones: </label>
-                    <textarea class="form-control" rows="3"></textarea>    
+                    <textarea class="form-control" rows="3" 
+                    v-model="actual.final.indicaciones"></textarea>    
                 </div>
             </div> 
               
                 <div class="col-sm-4">
                   <div class="form-group">
                   <label>Diagnóstico Final: </label>
-                      <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial">  
+                      <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial" 
+                      v-model="actual.final.dx_final">  
                   </div>  
                 </div> 
 
@@ -252,7 +259,8 @@
               <div class="col-sm-5">
                 <div class="form-group">
                    <label>Referencias: </label>
-                     <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial">    
+                     <input type="text" name="fecha_nac" class="form-control" id="nacimiento" placeholder="Introduzca aquí el diagnóstico inicial" 
+                     v-model="actual.referencias.referencias">    
                  </div>
               </div>
           </div>
@@ -262,8 +270,13 @@
       <!-- /.box-body -->
       <div class="box-footer">
         <div class="datos">
-          <button class="btn btn-default">Editar</button>
-          <button type="submit" class="btn btn-success pull-right">Enviar</button>  
+        <label>¿Desea concluír la consulta?</label>
+          <select class="form-control" v-model="actual.estado" required="required">
+                    <option value="Guardada">Guardar</option>
+                    <option value="Concluida">Dar Salida</option>
+                  </select>
+          <hr>
+            <button type="submit" class="btn btn-success pull-right">Enviar</button>   
         </div>
       </div>
       <!-- /.box-footer -->
@@ -279,6 +292,8 @@
     props: ['id'],
 		data() {
             return {
+
+              existe: false,
 
               datosIsActive : true,
               datosSection: true,
@@ -307,11 +322,13 @@
                 nacimiento: ''
               },
 
-              consulta: {
+              actual: {
 
+                consulta_id : this.id,
+                estado: '',
               	signos: {
-              		pa: '',
-              		pulso: '',
+              		presion_arterial: '',
+              		frecuencia_cardiaca: '',
               		temperatura: '',
               		peso: ''
               	},
@@ -329,10 +346,10 @@
               	},
               	final: {
               		resultados: '',
+                  indicaciones: '',
               		dx_final: ''
               	},
               	referencias:{
-              		indicaciones: '',
               		referencias: ''
               	}
                   
@@ -409,11 +426,115 @@
                   vm.paciente.cedula = response.data.paciente.cedula;
                   vm.paciente.nombre = response.data.paciente.nombre;
                   vm.paciente.nacimiento = response.data.paciente.nacimiento;
+
+                  if (response.data.estado != 'Espera') {
+                    vm.existe = true;
+                    vm.fetchConsultaGuardada();
+                  }
                   
                 }).catch(function (error) {
                   console.log('Se ha encontrado un error: ' + error);
                 });
 
+          },
+
+          fetchConsultaGuardada(){
+
+            var vm = this
+
+            axios.get('/api/guardada/' + this.id).then(function(response){
+              //Valores de Signos
+              vm.actual.signos.presion_arterial = response.data.signos.presion_arterial;
+              vm.actual.signos.frecuencia_cardiaca = response.data.signos.frecuencia_cardiaca;
+              vm.actual.signos.temperatura = response.data.signos.temperatura;
+              vm.actual.signos.peso = response.data.signos.peso;
+              //Valores Inicial
+              vm.actual.inicial.sintomas = response.data.condicion.sintomas;
+              vm.actual.inicial.observaciones = response.data.condicion.observaciones;
+              vm.actual.inicial.dx_inicial = response.data.condicion.dx_inicial;
+              //Valores Plan
+              vm.actual.plan.tratamiento = response.data.plan.tratamiento;
+              //Valores Pruebas
+              vm.actual.pruebas.laboratorio = response.data.laboratorios.lab;
+              vm.actual.pruebas.rayos = response.data.rayos.rx;
+              //Valores Dx Final
+              vm.actual.final.resultados = response.data.diagnostico.resultados;
+              vm.actual.final.indicaciones = response.data.diagnostico.indicaciones;
+              vm.actual.final.dx_final = response.data.diagnostico.dx;
+              //Valores Referencias
+              vm.actual.referencias.referencias = response.data.referencias.referencia;
+              vm.existe = true;
+
+            }).catch(function(error){
+              console.log('Se ha encontrado un error: ' + error);
+            });
+
+          },
+
+          addConsulta(){
+
+                var vm = this
+
+                swal({
+                  title: '¿Estás seguro?',
+                  text: "¡Serás redireccionado a la página principal!",
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: '¡Sí, proceder!',
+                  cancelButtonText: '¡No, cancelar!',
+                  confirmButtonClass: 'btn btn-success',
+                  cancelButtonClass: 'btn btn-danger',
+                  animation: false,
+                  customClass: 'animated tada',
+                  showLoaderOnConfirm: true,
+                  buttonsStyling: true,
+                  preConfirm: function (email) {
+                    return new Promise(function (resolve, reject) {
+                      setTimeout(function() {
+                        if (vm.existe == true) {
+                        axios.put('/consultas/' + vm.id, vm.actual).then(function (response) {
+                          console.log(response);
+                          resolve()
+                        })   
+                        .catch(function (error) {
+                          console.log('Se ha encontrado un error: ' + error);
+                          reject('Error al ejecutar la operación: PUT')
+                        });  
+                      }else{
+                        axios.post('/consultas/', vm.actual).then(function (response) {
+                          console.log(response);
+                          resolve()
+                        })   
+                        .catch(function (error) {
+                          console.log('Se ha encontrado un error: ' + error);
+                          reject('Error al ejecutar la operación: POST')
+                        });  
+                      }        
+                      }, 2000)
+                    })
+                  },
+                  allowOutsideClick: false
+                }).then(function () {
+                  swal({
+                    type: 'success',
+                    title: '¡Acción terminada!',
+                    text: 'Serás redireccionado al pulsar el botón.',
+                  }).then(function(){
+                    window.location.href="/home/";
+                  });
+                }, function (dismiss) {
+                  // dismiss can be 'cancel', 'overlay',
+                  // 'close', and 'timer'
+                  if (dismiss === 'cancel') {
+                    swal(
+                      'Cancelado',
+                      'Operación anulada',
+                      'error'
+                    )
+                  }
+                })      
           },
           
           showDatos() {

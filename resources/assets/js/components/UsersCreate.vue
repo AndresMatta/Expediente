@@ -10,7 +10,9 @@
                     </div>
                     <form v-on:submit.prevent="submit()" method="post">
                     <div class="modal-body">
-                    
+                    <div class="errors" v-if="errors">
+                        <li v-for="error in errors">s{{ error }}</li>
+                    </div>
                         <div class="form-group">
                             <label>Usuario</label>
                                 <input id="username" type="text" class="form-control" name="username" required autofocus v-model="user.username">
@@ -59,6 +61,7 @@
 
         data(){
             return {
+              erros: [''],
               user: {
                   name: '',
                   username: '',
@@ -81,6 +84,7 @@
                 })
                 .catch(function (error) {
                 console.log('Se ha encontrado un error: ' + error);
+                vm.errors = error;
                 });
 
                 }

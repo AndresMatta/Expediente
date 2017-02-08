@@ -45,7 +45,6 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ URL::to('/users') }}"><span class="fa fa-circle-o"></span>Usuarios Registrados</a></li>
-                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -57,8 +56,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                    <li><a href="#"><span class="fa fa-circle-o"></span>{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span>Pacientes atendidos</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span>Pacientes de empresa</a></li>
                 </ul>
             </li>
             <li class="treeview">

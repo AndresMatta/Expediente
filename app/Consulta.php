@@ -14,4 +14,39 @@ class Consulta extends Model
     {
         return $this->belongsTo('App\Paciente');
     }
+
+    public function condicion()
+    {
+        return $this->hasOne('App\Condicion');
+    }
+
+    public function plan()
+    {
+        return $this->hasOne('App\Plan');
+    }
+
+    public function signos()
+    {
+        return $this->hasOne('App\Signos');
+    }
+
+    public function laboratorios()
+    {
+        return $this->hasOne('App\Laboratorios');
+    }
+
+    public function rayos()
+    {
+        return $this->hasOne('App\Rayos');
+    }
+
+    public function diagnostico()
+    {
+        return $this->hasOne('App\Diagnostico');
+    }
+
+    public function referencias()
+    {
+        return $this->hasOne('App\Referencias');
+    }
 }

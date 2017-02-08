@@ -1,6 +1,13 @@
 <template>
-
-  <div class="dv animated fadeIn">
+<div class="box box-primary animated fadeIn">
+  <div class="box-header with-border">
+    <h3 class="box-title">Lista de Usuarios</h3>
+      <div class="box-tools pull-right">
+        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      </div><!-- /.box-tools -->
+  </div>
+  <div class="box-body">
+      <div class="dv">
     <div class="dv-header">
       <div class="dv-header-title">
         <button class="dv-header-btn" data-toggle="modal" data-target="#createModal">
@@ -73,7 +80,10 @@
         </div>
       </div>
     </div>
+  </div>  
   </div>
+</div>
+  
 </template>
 
 <script>

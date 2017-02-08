@@ -8,6 +8,7 @@
     <link href="{{ asset('/css/all.css') }}" rel="stylesheet" type="text/css" />
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/animate.css')!!}
+    {!!Html::style('css/sweetalert2.css')!!}
     
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -12,12 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('adminlte::auth.login');
 });
 
 //Usuarios
 Route::get('/api/users', 'UsuarioController@getUsers');
-Route::post('/api/users', 'UsuarioController@store');
 Route::resource('users', 'UsuarioController');
 Route::delete('api/users/{id}', 'UsuarioController@destroy');
 
@@ -32,7 +31,7 @@ Route::get('recepcion', 'ConsultaController@recepcion');
 Route::get('consultas/atencion/{id}' , 'ConsultaController@atencion');
 Route::get('consultas/pendientes/{estado}', 'ConsultaController@getConsultasEnEspera');
 Route::get('api/actual/{id}' , 'ConsultaController@getConsulta');
-
+Route::get('api/guardada/{id}' , 'ConsultaController@getConsultaGuardada');
 
 
 

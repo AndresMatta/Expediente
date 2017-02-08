@@ -10,6 +10,7 @@
 					<th style="padding:1em;"><span class="fa fa-user"></span> Nombre Completo</th>
 					<th style="padding:1em;"><span class="fa fa-mars"></span> Sexo</th>
 					<th style="padding:1em;"><span class="fa fa-birthday-cake"></span> Fecha de Nacimiento</th>
+					<th style="padding:1em;"><span class="fa fa-clock-o"></span> Estado de la Consulta</th>
 					<th style="padding:1em;"><span class="fa fa-cogs"></span> Operaciones</th>
 				</thead>
 				<tbody>
@@ -17,7 +18,8 @@
 						<td>{{ consulta.paciente.cedula }}</td>
 						<td>{{ consulta.paciente.nombre }}</td>
 						<td>{{ consulta.paciente.sexo }}</td>
-						<td>{{ consulta.paciente.nacimiento }}</td>
+						<td align="center">{{ consulta.paciente.nacimiento }}</td>
+						<td align="center">{{ consulta.estado }}</td>
 						<td align="center">
 							<a v-bind:href="'/consultas/atencion/'+ consulta.id" class="btn btn-success" role="button"> Atender Paciente
 							<span class="fa fa-stethoscope"></span></a>
@@ -39,7 +41,7 @@
 
 		data() {
             return {
-              estado : 'Espera',
+              estado : 'Concluida',
               activas: {}
             };
         },
